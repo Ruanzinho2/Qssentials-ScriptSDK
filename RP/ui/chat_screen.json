@@ -1,0 +1,43 @@
+{
+  "namespace": "chat",
+
+  "messages_text/text": {
+    "bindings":[{
+      "binding_type": "view",
+      "source_property_name": "((('§␛' + #text + '§r') - ('§␛' + '§t§i§t§l§e') = ('§␛' + #text + '§r')) and (not (#text = 'clearchat-nperma')))",
+      "target_property_name": "#visible"
+    }]
+  },
+  "chat_screen_content": {
+    "modifications": [{
+      "array_name": "controls",
+      "operation": "insert_front",
+      "value": {
+        "qrcode": {
+          "type": "custom",
+          "renderer": "qr_code_renderer",
+          "size": [100,
+            100],
+          "layer": 10,
+          "property_bag": {
+            "#qr_code_content": "#urll"
+          },
+          "bindings": [{
+            "binding_name": "#message_text_box_content",
+            "binding_name_override": "#urll"
+          },
+            {
+              "binding_type": "view",
+              "source_property_name": "#urll",
+              "target_property_name": "#qr_code_content"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(('%.6s' * #urll)='https:')",
+              "target_property_name": "#visible"
+            }]
+        }
+      }
+    }]
+  }
+}

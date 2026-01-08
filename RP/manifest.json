@@ -1,0 +1,28 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Qssentials [RP]",
+    "description": "Resource Color the Addon :>",
+    "min_engine_version": [
+      1,
+      21,
+      100
+    ],
+    "uuid": "290199d9-b3c5-488a-9fb9-be28cd4e639d",
+    "version": [
+      1,
+      1,
+      0
+    ]
+  },
+  "modules": [{
+    "description": "resource",
+    "type": "resources",
+    "uuid": "a62e8a5b-e5e7-4e10-9a7f-183fb6a611ec",
+    "version": [
+      1,
+      0,
+      0
+    ]
+  }]
+}

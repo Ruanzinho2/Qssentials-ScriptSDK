@@ -1,0 +1,985 @@
+{
+  "namespace": "nxyz_ui",
+
+  // RANK - UI ----------------–
+
+  "hh1": {
+    "type": "image",
+    "texture": "textures/ore-form/background/form",
+    "size":[284,
+      200],
+    "controls":[{
+      "stacked": {
+        "type":"stack_panel",
+        "size":["100%",
+          "100%"],
+        "controls":[{
+          "header": {
+            "type": "panel",
+            "size":["100%",
+              20],
+            "controls":[{
+              "background": {
+                "type": "image",
+                "size": ["100%",
+                  "100%"],
+                "texture": "textures/ui/Black",
+                "controls":[{
+                  "black": {
+                    "type":"image",
+                    "texture": "textures/ore-form/background/header",
+                    "size":["100%-2px",
+                      "100%-2px"]
+                  }
+                },
+                  {
+                    "title_label": {
+                      "type": "label",
+                      "layer": 30,
+                      "offset":[0,
+                        -3],
+                      "text": "#title_text",
+                      "font_type": "MinecraftTen"
+                    }
+                  },
+                  {
+                    "close_button@common.close_button": {
+                      "offset":[0,
+                        -2],
+                      "$close_button_default_texture": "textures/ui/close_button_default_light",
+                      "$hover_texture": "textures/ui/close_X_button_hover",
+                      "$pressed_texture": "textures/ui/close_X_button_hover",
+                      "layer": 3
+                    }
+                  }]
+              }
+            }]
+          }
+        },
+          {
+            "form": {
+              "type": "panel",
+              "size":["100%",
+                "fill"],
+              "controls":[{
+                "overlay_form": {
+                  "type": "image",
+                  "size":["100%-10px",
+                    "100%-10px"],
+                  "texture": "textures/ore-form/background/overlay_form",
+                  "controls":[{
+                    "root_panel": {
+                      "type": "panel",
+                      "size":["100%-4px",
+                        "100%-4px"],
+                      "clips_children": true,
+                      "controls":[{
+                        "overlay": {
+                          "type": "image",
+                          "texture": "textures/overlay",
+                          "size":["200%",
+                            "200%"]
+                        }
+                      },
+                        {
+                          "root": {
+                            "type": "panel",
+                            "size":["100%-4px",
+                              "100%"],
+                            "controls":[{
+                              "scrolling_panel@common.scrolling_panel": {
+                                "anchor_to": "top_left",
+                                "anchor_from": "top_left",
+                                "$show_background": false,
+                                "size": ["100%",
+                                  "100%"],
+                                "$scrolling_content": "nxyz_ui.rank_scrolling_content",
+                                "$scroll_size": [5,
+                                  "100% - 4px"],
+                                "$enabled_bar": false,
+                                "$scrolling_pane_size": ["100% - 4px",
+                                  "100% - 2px"],
+                                "$scrolling_pane_offset": [2,
+                                  0],
+                                "$scroll_bar_right_padding_size": [0,
+                                  0]
+                              }
+                            }]
+                          }
+                        }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+      }
+    }],
+    "bindings": [{
+      "binding_name": "#title_text"
+    },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#title_text - '§h§h§1') = #title_text))",
+        "target_property_name": "#visible"
+      }]
+  },
+
+  "rank_scrolling_content": {
+    "type": "stack_panel",
+    "size": ["100% - 4px",
+      "100%c"],
+    "orientation": "vertical",
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+
+    "controls": [{
+      "background_header": {
+        "type": "image",
+        "size":["100%",
+          34],
+        "texture": "textures/ore-form/background/form_upper",
+        "controls":[{
+          "header": {
+            "type": "image",
+            "texture": "textures/ore-form/background/overlay_header",
+            "size":["100%-16px",
+              24],
+            "controls":[{
+              "header_panel": {
+                "type": "panel",
+                "size":["100%",
+                  "100%"],
+                "controls":[{
+                  "label": {
+                    "type": "label",
+                    "text":"$text",
+                    "text_alignment": "center",
+                    "shadow": true,
+                    "offset":[0,
+                      -1],
+                    "bindings":"$text_bindings"
+                  }
+                }],
+                "$text": "#form_button_text",
+                "$text_bindings": [{
+                  "binding_type": "collection_details",
+                  "binding_collection_name": "form_buttons"
+                },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#collection_index",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(#collection_index = 0)",
+                    "target_property_name": "#visible"
+                  }]
+              }
+            }]
+          }
+        }]
+      }
+    },
+      {
+        "wm": {
+          "type": "image",
+          "size":["100%",
+            16],
+          "texture": "textures/ore-form/background/form_overlay",
+          "controls":[{
+            "label_panel": {
+              "type": "panel",
+              "size":["100%",
+                "100%"],
+              "controls":[{
+                "label": {
+                  "type": "label",
+                  "text":"Creator: §6@Nperma",
+                  "text_alignment": "left",
+                  "shadow": true,
+                  "offset":[0,
+                    -1],
+                  "layer": 30
+                }
+              }]
+            }
+          }]
+        }
+      },
+      {
+        "ll1": {
+          "type": "stack_panel",
+          "size":["100%",
+            "100%c"],
+          "factory": {
+            "name": "buttons",
+            "control_ids": {
+              "button": "nxyz_ui.empty",
+              "label": "@nxyz_ui.hh1_label",
+              "header": "@nxyz_ui.empty",
+              "divider": "@nxyz_ui.empty"
+            }
+          },
+          "collection_name": "form_buttons",
+          "bindings": [{
+            "binding_name": "#form_button_contents",
+            "binding_name_override": "#collection_length"
+          }]
+        }
+      },
+      {
+        "ll2": {
+          "type": "image",
+          "size":["100%",
+            "100%c+8px"],
+          "texture": "textures/ore-form/background/form_middle",
+          "controls":[{
+            "rank_sp": {
+              "type": "stack_panel",
+              "size":["100%-16px",
+                "100%c"],
+              "controls":[{
+                "important_header_message": {
+                  "type": "label",
+                  "text": "#form_button_text",
+                  "collection_index": 1,
+                              "bindings": [{
+                                "binding_type": "collection_details",
+                                "binding_collection_name": "form_buttons"
+                              },
+                                {
+                                  "binding_name": "#form_button_text",
+                                  "binding_type": "collection",
+                                  "binding_collection_name": "form_buttons"
+                                }],
+                  "font_scale_factor": 1.2,
+                  "text_alignment": "left",
+                  "font_type": "MinecraftTen"
+                }
+              },
+                {
+                  "padd@empty": {
+                    "size":[0,
+                      2]
+                  }},
+                {
+                  "layer_background": {
+                    "type": "image",
+                    "texture": "textures/ore-form/background/overlay_border_content",
+                    "size":["100%",
+                      36],
+                    "controls":[{
+                      "message_image": {
+                        "type": "stack_panel",
+                        "size":["100%-4px",
+                          "100%-4px"],
+                        "orientation": "horizontal",
+                        "controls":[{
+                          "icon_none": {
+                            "type": "image",
+                            "texture": "textures/ui/icon_none",
+                            "size":[32,
+                              32],
+                            "layer": 30
+                          }
+                        },
+                          {
+                            "padd@empty": {
+                              "size":[2,
+                                0]}},
+                          {
+                            "important_message_overlay": {
+                              "type": "label",
+                              "layer": 30,
+                              "text": "#form_button_text",
+                              "collection_index": 2,
+                              "bindings": [{
+                                "binding_type": "collection_details",
+                                "binding_collection_name": "form_buttons"
+                              },
+                                {
+                                  "binding_name": "#form_button_text",
+                                  "binding_type": "collection",
+                                  "binding_collection_name": "form_buttons"
+                                }],
+                              "font_scale_factor": 0.95,
+                              "anchor_from": "top_left",
+                              "anchor_to": "top_left",
+                              "size":["100% - 4px",
+                                "default"],
+                              "offset":[-1,
+                                0]
+                            }
+                          }],
+                        "collection_name": "form_buttons",
+                        "bindings": [{
+                          "binding_name": "#form_button_contents",
+                          "binding_name_override": "#collection_length"
+                        }]
+                      }
+                    }]
+                  }
+                }],
+              "collection_name": "form_buttons",
+              "bindings": [{
+                "binding_name": "#form_button_contents",
+                "binding_name_override": "#collection_length"
+              }]
+            }
+          }]
+        }
+      },
+      {
+        "background_below": {
+          "type": "image",
+          "size":["100%",
+            20],
+          "texture": "textures/ore-form/background/form_below"
+        }
+      }]
+  },
+
+  "hh1_label": {
+    "type": "image",
+    "texture": "textures/ore-form/background/form_middle",
+    "size":["100%",
+      "100%c+8px"],
+    "controls":[{
+      "stacked": {
+        "type": "stack_panel",
+        "size":["100%-16px",
+          "100%c"],
+        "controls":[{
+          "icon_rank_panel": {
+            "type": "panel",
+            "size":["100%",
+              "100%c"],
+            "controls":[{
+              "icon_rank": {
+                "type": "label",
+                "size":["100%",
+                  "default"],
+                "text_alignment": "left",
+                "layer": 30,
+                "text": "#text",
+                "bindings": [{
+                  "binding_type": "collection_details",
+                  "binding_collection_name": "form_buttons"
+                },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(('%.100s' * #form_button_text) - '\t')",
+                    "target_property_name": "#text"
+                  }]
+              }
+            }]
+          }
+        },
+          {
+            "padd@empty": {
+              "size":[0,
+                2]
+            }
+          },
+          {
+            "border_top_panel": {
+              "type": "panel",
+              "size":["100%c",
+                8],
+              "anchor_from": "top_left",
+              "anchor_to": "top_left",
+              "controls":[{
+                "background": {
+                  "type": "image",
+                  "texture": "textures/ore-form/background/overlay_border_content_blank",
+                  "size":["100%c+8px",
+                    "100%"],
+                  "offset":[0,
+                    1],
+                  "layer": 5,
+                  "controls":[{
+                    "preview": {
+                      "type": "label",
+                      "text": "preview",
+                      "layer": 30,
+                      "offset":[0.5,
+                        2],
+                      "size":["default",
+                        "default"],
+                      "font_scale_factor": 0.9,
+                      "font_type": "MinecraftTen"
+                    }
+                  }]
+                }
+              }]
+            }
+          },
+          {
+            "label_background": {
+              "type": "image",
+              "texture": "textures/ore-form/background/overlay_border_content",
+              "size":["100%",
+                "100%c+2px"],
+              "layer": 3,
+              "controls":[{
+                "text": {
+                  "type": "panel",
+                  "size": ["100%c",
+                    20],
+                  "controls":[{
+                    "text": {
+                      "type": "label",
+                      "size":["default",
+                        "default"],
+                      "offset":[2,
+                        0],
+                      "text": "#text",
+                      "layer": 30,
+                      "bindings": [{
+                        "binding_type": "collection_details",
+                        "binding_collection_name": "form_buttons"
+                      },
+                        {
+                          "binding_name": "#form_button_text",
+                          "binding_type": "collection",
+                          "binding_collection_name": "form_buttons"
+                        },
+                        {
+                          "binding_type": "view",
+                          "source_property_name": "((#form_button_text - ('%.100s' * #form_button_text)) - '\t')",
+                          "target_property_name": "#text"
+                        }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+      }
+    }],
+    "bindings": [{
+      "binding_type": "collection_details",
+      "binding_collection_name": "form_buttons"
+    },
+      {
+        "binding_name": "#collection_index",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#collection_index > 6)",
+        "target_property_name": "#visible"
+      }]
+  },
+  // HOME - UI
+
+  "hh0": {
+    "type": "image",
+    "texture": "textures/ore-form/background/form",
+    "size":[284,
+      200],
+    "controls":[{
+      "stacked": {
+        "type":"stack_panel",
+        "size":["100%",
+          "100%"],
+        "controls":[{
+          "header": {
+            "type": "panel",
+            "size":["100%",
+              20],
+            "controls":[{
+              "background": {
+                "type": "image",
+                "size": ["100%",
+                  "100%"],
+                "texture": "textures/ui/Black",
+                "controls":[{
+                  "black": {
+                    "type":"image",
+                    "texture": "textures/ore-form/background/header",
+                    "size":["100%-2px",
+                      "100%-2px"]
+                  }
+                },
+                  {
+                    "title_label": {
+                      "type": "label",
+                      "layer": 30,
+                      "offset":[0,
+                        -3],
+                      "text": "#title_text",
+                      "font_type": "MinecraftTen"
+                    }
+                  },
+                  {
+                    "close_button@common.close_button": {
+                      "offset":[0,
+                        -2],
+                      "$close_button_default_texture": "textures/ui/close_button_default_light",
+                      "$hover_texture": "textures/ui/close_X_button_hover",
+                      "$pressed_texture": "textures/ui/close_X_button_hover",
+                      "layer": 3
+                    }
+                  }]
+              }
+            }]
+          }
+        },
+          {
+            "form": {
+              "type": "panel",
+              "size":["100%",
+                "fill"],
+              "controls":[{
+                "overlay_form": {
+                  "type": "image",
+                  "size":["100%-10px",
+                    "100%-10px"],
+                  "texture": "textures/ore-form/background/overlay_form",
+                  "controls":[{
+                    "root_panel": {
+                      "type": "panel",
+                      "size":["100%-4px",
+                        "100%-4px"],
+                      "clips_children": true,
+                      "controls":[{
+                        "overlay": {
+                          "type": "image",
+                          "texture": "textures/overlay",
+                          "size":["200%",
+                            "200%"]
+                        }
+                      },
+                        {
+                          "root": {
+                            "type": "panel",
+                            "size":["100%-4px",
+                              "100%"],
+                            "controls":[{
+                              "scrolling_panel@common.scrolling_panel": {
+                                "anchor_to": "top_left",
+                                "anchor_from": "top_left",
+                                "$show_background": false,
+                                "size": ["100%",
+                                  "100%"],
+                                "$scrolling_content": "nxyz_ui.home_scrolling_content",
+                                "$scroll_size": [5,
+                                  "100% - 4px"],
+                                "$enabled_bar": false,
+                                "$scrolling_pane_size": ["100% - 4px",
+                                  "100% - 2px"],
+                                "$scrolling_pane_offset": [2,
+                                  0],
+                                "$scroll_bar_right_padding_size": [0,
+                                  0]
+                              }
+                            }]
+                          }
+                        }]
+                    }
+                  }]
+                }
+              }]
+            }
+          }]
+      }
+    }],
+    "bindings": [{
+      "binding_name": "#title_text"
+    },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#title_text - '§h§h§0') = #title_text))",
+        "target_property_name": "#visible"
+      }]
+  },
+
+  "home_scrolling_content": {
+    "type": "stack_panel",
+    "size": ["100% - 4px",
+      "100%c"],
+    "orientation": "vertical",
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+
+    "controls": [{
+      "background_header": {
+        "type": "image",
+        "size":["100%",
+          34],
+        "texture": "textures/ore-form/background/form_upper",
+        "controls":[{
+          "header": {
+            "type": "image",
+            "texture": "textures/ore-form/background/overlay_header",
+            "size":["100%-16px",
+              24],
+            "controls":[{
+              "header_panel": {
+                "type": "panel",
+                "size":["100%",
+                  "100%"],
+                "controls":[{
+                  "label": {
+                    "type": "label",
+                    "text":"$text",
+                    "text_alignment": "center",
+                    "shadow": true,
+                    "offset":[0,
+                      -1],
+                    "bindings":"$text_bindings"
+                  }
+                }],
+                "$text": "#form_button_text",
+                "$text_bindings": [{
+                  "binding_type": "collection_details",
+                  "binding_collection_name": "form_buttons"
+                },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#collection_index",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(#collection_index = 0)",
+                    "target_property_name": "#visible"
+                  }]
+              }
+            }]
+          }
+        }]
+      }
+    },
+      {
+        "wm": {
+          "type": "image",
+          "size":["100%",
+            16],
+          "texture": "textures/ore-form/background/form_overlay",
+          "controls":[{
+            "label_panel": {
+              "type": "panel",
+              "size":["100%",
+                "100%"],
+              "controls":[{
+                "label": {
+                  "type": "label",
+                  "text":"Creator: §6@Nperma",
+                  "text_alignment": "left",
+                  "shadow": true,
+                  "offset":[0,
+                    -1],
+                  "layer": 30
+                }
+              }]
+            }
+          }]
+        }
+      },
+      {
+        "background_middle": {
+          "type": "image",
+          "size":["100%",
+            "100%c+8px"],
+          "texture": "textures/ore-form/background/form_middle",
+          "controls":[{
+            "root": {
+              "type": "panel",
+              "size":["100%-16px",
+                "100%c+8px"],
+              "controls":[{
+                "stacked_show": {
+                  "type": "stack_panel",
+                  "size":["100%",
+                    "100%c"],
+                  "controls":[{
+                    "count_home_panel": {
+                      "type": "panel",
+                      "size":["100%c",
+                        8],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "controls":[{
+                        "count_background": {
+                          "type": "image",
+                          "texture": "textures/ore-form/background/overlay_border_content_blank",
+                          "size":["100%c+4px",
+                            "100%"],
+                          "offset":[0,
+                            1],
+                          "layer": 5,
+                          "controls":[{
+                            "label": {
+                              "type": "stack_panel",
+                              "size": ["100%c",
+                                "100%"],
+                              "orientation": "vertical",
+                              "controls":[{
+                                "panel": {
+                                  "type": "panel",
+                                  "size":["100%c",
+                                    "100%"],
+                                  "collection_index": 1,
+                                  "controls":[{
+                                    "label": {
+                                      "type": "label",
+                                      "text": "#form_button_text",
+                                      "font_scale_factor": 0.8,
+                                      "text_alignment": "center",
+                                      "layer": 20,
+                                      "offset":[0,
+                                        2],
+                                      "bindings": [{
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "form_buttons"
+                                      },
+                                        {
+                                          "binding_name": "#form_button_text",
+                                          "binding_type": "collection",
+                                          "binding_collection_name": "form_buttons"
+                                        }]
+                                    }
+                                  }]
+                                }
+                              }],
+                              "collection_name": "form_buttons",
+                              "bindings": [{
+                                "binding_name": "#form_button_contents",
+                                "binding_name_override": "#collection_length"
+                              }]
+                            }
+                          }]
+                        }
+                      }]
+                    }
+                  },
+                    {
+                      "buttons_background": {
+                        "type": "image",
+                        "texture": "textures/ore-form/background/overlay_border_content",
+                        "size":["100%",
+                          "100%c+8px"],
+                        "controls":[{
+                          "buttons": {
+                            "type": "stack_panel",
+                            "size": ["100% - 4px",
+                              "100%c"],
+                            "anchor_from": "bottom_middle",
+                            "anchor_to": "bottom_middle",
+                            "offset":[0,
+                              -2],
+                            "orientation": "vertical",
+
+                            "factory": {
+                              "name": "buttons",
+                              "control_ids": {
+                                "button": "nxyz_ui.home_buttons",
+                                "label": "@nxyz_ui.empty",
+                                "header": "@nxyz_ui.empty",
+                                "divider": "@nxyz_ui.empty"
+                              }
+                            },
+
+                            "collection_name": "form_buttons",
+                            "bindings": [{
+                              "binding_name": "#form_button_contents",
+                              "binding_name_override": "#collection_length"
+                            }]
+                          }
+                        }]
+                      }
+                    }],
+                  "bindings": [{
+                    "binding_name": "#title_text"
+                  },
+                    {
+                      "binding_type": "view",
+                      "source_property_name": "((#title_text - '§h§h§0§s') = #title_text)",
+                      "target_property_name":"#visible"
+                    }]
+                }
+              },
+                {
+                  "panel_unshow": {
+                    "type": "image",
+                    "size":["100%",
+                      80],
+                    "texture": "textures/ore-form/background/overlay_border_content",
+                    "controls":[{
+                      "message_image": {
+                        "type": "image",
+                        "size":["100%-4px",
+                          "100%-4px"],
+                        "texture": "textures/ui/sign_in_prompts_my_content"
+                      }
+                    }],
+                    "bindings": [{
+                      "binding_name": "#title_text"
+                    },
+                      {
+                        "binding_type": "view",
+                        "source_property_name": "(not((#title_text - '§h§h§0§s') = #title_text))",
+                        "target_property_name":"#visible"
+                      }]
+                  }
+                }]
+            }
+          }]
+        }
+      },
+      {
+        "background_below": {
+          "type": "image",
+          "size":["100%",
+            20],
+          "controls":[{
+            "text_unshow": {
+              "type": "label",
+              "layer": 20,
+              "text": "No Homes",
+              "bindings": [{
+                "binding_name": "#title_text"
+              },
+                {
+                  "binding_type": "view",
+                  "source_property_name": "(not((#title_text - '§h§h§0§s') = #title_text))",
+                  "target_property_name":"#visible"
+                }]
+            }
+          }],
+          "texture": "textures/ore-form/background/form_below"
+        }
+      }]
+  },
+
+  "home_buttons": {
+    "type": "panel",
+    "size":["100%",
+      32],
+    "layer": 2,
+    "controls":[{
+      "background": {
+        "type": "image",
+        "size":["100%",
+          30],
+        "controls":[{
+          "button_overlay": {
+            "type": "image",
+            "texture": "textures/ui/Black",
+            "alpha": 0.2
+          }
+        },
+          {
+            "stacked": {
+              "type": "stack_panel",
+              "orientation": "horizontal",
+              "size":["100%",
+                "100%"],
+              "controls":[{
+                "panel_image": {
+                  "type": "panel",
+                  "size":[32,
+                    "100%"],
+                  "bindings":[{
+                    "binding_type": "view",
+                    "resolve_sibling_scope": true,
+                    "source_control_name": "image",
+                    "source_property_name": "(not (#texture=''))",
+                    "target_property_name": "#visible"
+                  }],
+                  "controls": [{
+                    "image": {
+                      "type": "image",
+                      "layer": 2,
+                      "size": [32,
+                        32],
+                      "offset": [0,
+                        0],
+                      "bindings":[{
+                        "binding_name": "#form_button_texture",
+                        "binding_name_override": "#texture",
+                        "binding_type": "collection",
+                        "binding_collection_name": "form_buttons"
+                      },
+                        {
+                          "binding_name": "#form_button_texture_file_system",
+                          "binding_name_override": "#texture_file_system",
+                          "binding_type": "collection",
+                          "binding_collection_name": "form_buttons"
+                        },
+                        {
+                          "binding_type": "view",
+                          "source_property_name": "(not ((#texture = '') or (#texture = 'loading')))",
+                          "target_property_name": "#visible"
+                        }]
+                    }
+                  },
+                    {
+                      "progress@progress.progress_loading_bars": {
+                        "size": [30,
+                          4],
+                        "offset": [-2,
+                          16],
+                        "bindings":[{
+                          "binding_type": "view",
+                          "source_control_name": "image",
+                          "resolve_sibling_scope": true,
+                          "source_property_name": "(#texture = 'loading')",
+                          "target_property_name": "#visible"
+                        }]
+                      }
+                    }]
+                }
+              },
+                {
+                  "form_button@common_buttons.light_text_button": {
+                    "$pressed_button_name": "button.form_button_click",
+                    "size": ["fill",
+                      "100%"],
+                    "$border_visible": false,
+                    "$default_button_texture": "textures/ore-form/button/button_default_slim",
+                    "$hover_button_texture": "textures/ore-form/button/button_hover_slim",
+                    "$pressed_button_texture": "textures/ore-form/button/button_pressed",
+                    "$button_text": "#form_button_text",
+                    "$button_text_binding_type": "collection",
+                    "$button_text_grid_collection_name": "form_buttons",
+                    "$button_text_max_size": ["100%",
+                      20],
+                    "bindings": [{
+                      "binding_type": "collection_details",
+                      "binding_collection_name": "form_buttons"
+                    }]
+                  }
+                }]
+            }
+          }]
+      }
+    }]
+  },
+
+  "empty": {
+    "type": "panel",
+    "size":[0,
+      0]
+  }
+}

@@ -1,0 +1,876 @@
+{
+  "namespace": "hud",
+  "chat_grid_item/chat_background": {
+    "bindings": [{
+      "binding_name": "#chat_text",
+      "binding_name_override": "#text",
+      "binding_type": "collection",
+      "binding_collection_name": "chat_text_grid",
+      "binding_condition": "once"
+    },
+      {
+        "binding_type": "view",
+        "source_property_name": "((('§␛' + #text + '§r') - ('§␛' + '§t§i§t§l§e') = ('§␛' + #text + '§r')) and (not (#text = 'clearchat-nperma')))",
+        "target_property_name": "#visible"
+      }]
+  },
+  "hud_title_text": {
+    "bindings": [{
+      "binding_name": "#hud_title_text_string",
+      "binding_name_override": "#text",
+      "binding_type": "global"
+    },
+      {
+        "binding_type": "view",
+        "source_property_name": "(((#text-'§s§s§h')=#text) and (not (#text = '')))",
+        "target_property_name": "#visible"
+      }]
+  },
+
+  "nperma_root@common.empty_panel": {
+    "controls":[{
+      "scorehud_layout@hud.scorehud": {}
+    },
+      {
+        "title_rimeks_layout": {
+          "type": "stack_panel",
+          "size": [0,
+            "100%c"],
+          "layer": 20,
+          "anchor_from": "center_middle",
+          "anchor_to": "center_middle",
+          "factory": {
+            "name": "chat_item_factory",
+            "control_ids": {
+              "chat_item": "@hud.title_rimeks"
+            }
+          }
+        }
+      },
+      {
+        "host_watermark_not_survival": {
+          "type": "custom",
+          "renderer": "hunger_renderer",
+          "size":["100%",
+            0],
+          "anchor_from": "bottom_middle",
+          "anchor_to": "bottom_middle",
+          "offset":[0,
+            -20],
+          "bindings": [{
+            "binding_name": "#hud_title_text_string",
+            "binding_name_override": "#nperma",
+            "binding_type": "global"
+          },
+            {
+              "binding_type": "view",
+              "source_property_name": "(('%.20s' * (#nperma - '§s§s§h')) - '\t')",
+              "target_property_name": "#wm"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not(#wm='')",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_name": "(not #show_survival_ui)",
+              "binding_name_override": "#visible"
+            }],
+          "controls":[{
+            "watermark": {
+              "type": "label",
+              "layer": 2,
+              "text": "#text",
+              "size":["default",
+                30],
+              "text_alignment": "center",
+              "shadow": true,
+              "bindings": [{
+                "binding_type": "view",
+                "source_property_name": "('§r'+#wm)",
+                "target_property_name": "#text",
+                "source_control_name":"host_watermark_not_survival",
+                "resolve_sibling_scope": true
+              }]
+            }
+          }]
+        }
+      },
+      {
+        "host_watermark_survival": {
+          "type": "custom",
+          "renderer": "hunger_renderer",
+          "size":["100%cm",
+            0],
+          "anchor_from": "bottom_left",
+          "anchor_to": "bottom_left",
+          "offset":[4,
+            -4],
+          "bindings": [{
+            "binding_name": "#hud_title_text_string",
+            "binding_name_override": "#nperma",
+            "binding_type": "global"
+          },
+            {
+              "binding_type": "view",
+              "source_property_name": "(('%.20s' * (#nperma - '§s§s§h')) - '\t')",
+              "target_property_name": "#wm"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not(#wm='')",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_name": "#show_survival_ui",
+              "binding_name_override": "#visible"
+            }],
+          "controls":[{
+            "watermark": {
+              "type": "label",
+              "layer": 2,
+              "text": "#text",
+              "size":["default",
+                30],
+              "offset":[0,
+                0],
+              "text_alignment": "left",
+              "shadow": true,
+              "bindings": [{
+                "binding_type": "view",
+                "source_property_name": "('§r'+#wm)",
+                "target_property_name": "#text",
+                "source_control_name":"host_watermark_survival",
+                "resolve_sibling_scope": true
+              }]
+            }
+          }]
+        }
+      }]
+  },
+
+  "anim_trimeks1": {
+    "anim_type": "alpha",
+    "duration": "$in_time",
+    "easing": "out_sine",
+    "from": 0,
+    "to": 1,
+    "next": "@hud.anim_trimeks2"
+  },
+
+  "anim_trimeks2": {
+    "anim_type": "wait",
+    "duration": "$stay_time",
+    "next": "@hud.anim_trimeks3"
+  },
+
+  "anim_trimeks3": {
+    "anim_type": "alpha",
+    "duration": "$in_time",
+    "easing": "out_expo",
+    "from": 1,
+    "to": 0,
+    "destroy_at_end": "chat_grid_item"
+  },
+
+  "immediate_destroy_anim": {
+    "anim_type": "wait",
+    "duration": 0,
+    "destroy_at_end": "chat_grid_item"
+  },
+
+  "title_rimeks": {
+    "$flagship": "§t§i§t§l§e",
+    "$in_time": 0.3,
+    "$stay_time": 2,
+    "$out_time": 0.5,
+    "type": "panel",
+    "propagate_alpha": true,
+    "anchor_from": "center_middle",
+    "anchor_to": "center_middle",
+    "size":[0,
+      0],
+    "anims": ["@hud.anim_trimeks1"],
+    "controls":[{
+      "img": {
+        "type": "panel",
+        "size":["100%c+4px",
+          "100%c+8px"],
+        "min_size": ["100%c+4px",
+          44],
+        "controls":[{
+          "title": {
+            "type": "label",
+            "text": "#teks",
+            "font_size": "large",
+            "anchor_from": "top_middle",
+            "anchor_to": "top_middle",
+            "text_alignment": "center",
+            "shadow": true,
+            "bindings":[{
+              "binding_type": "view",
+              "source_control_name": "img",
+              "resolve_sibling_scope": true,
+              "source_property_name": "#titel",
+              "target_property_name": "#teks"
+            }]
+          }
+        },
+          {
+            "subtitle": {
+              "type": "label",
+              "text": "#teks",
+              "font_size": "medium",
+              "text_alignment": "center",
+              "anchor_from": "bottom_middle",
+              "anchor_to": "bottom_middle",
+              "shadow": true,
+              "bindings":[{
+                "binding_type": "view",
+                "source_control_name": "img",
+                "resolve_sibling_scope": true,
+                "source_property_name": "('§r'+#subtitel)",
+                "target_property_name": "#teks"
+              },
+                {
+                  "binding_type": "view",
+                  "source_control_name": "img",
+                  "source_property_name": "(not (#subtitel=''))",
+                  "target_property_name": "#visible"
+                }]
+            }
+          }],
+        "bindings":[{
+          "binding_type": "view",
+          "source_property_name": "(not (('§␛' + #text + '§r') - ('§␛' + $flagship) = ('§␛' + #text + '§r')))",
+          "target_property_name": "#visible"
+        },
+          {
+            "binding_type": "view",
+            "source_property_name": "('\b'+#text - $flagship)",
+            "target_property_name": "#twst"
+          },
+          {
+            "binding_type": "view",
+            "source_property_name": "('§r'+('%.200s' * #twst) - '\b'-'\t')",
+            "target_property_name": "#titel"
+          },
+          {
+            "binding_type": "view",
+            "source_property_name": "((#twst - ('%.200s' * #twst)) - '\b' - '\t')",
+            "target_property_name": "#subtitel"
+          }]
+      }
+    },
+      {
+        "immediate_destroy": {
+          "type": "stack_panel",
+          "size": [0,
+            0],
+          "factory": {
+            "name": "immediate_destroy_factory",
+            "control_name": "@hud.immediate_destroy_control"
+          },
+          "bindings": [{
+            "binding_type": "view",
+            "source_control_name": "img",
+            "source_property_name": "((not #visible) * 1)",
+            "target_property_name": "#collection_length",
+            "resolve_sibling_scope": true
+          }]
+        }
+      }]
+  },
+
+  "immediate_destroy_control": {
+    "type": "panel",
+    "size": [0,
+      0],
+    "anims": ["@hud.immediate_destroy_anim"]
+  },
+
+
+  "scorehud": {
+    "type": "panel",
+    "size":[85,
+      224],
+    "anchor_from": "right_middle",
+    "anchor_to": "right_middle",
+    "offset":[-2,
+      -18],
+    "controls":[{
+      "background": {
+        "type": "image",
+        "size": ["100%",
+          "100%c+4px"],
+        "clips_children":true,
+        "texture": "textures/ui/hud_tip_text_background",
+        "alpha": 0.5,
+        "layer": 1,
+        "controls":[{
+          "stacked": {
+            "type": "stack_panel",
+            "orientation": "vertical",
+            "clips_children": true,
+            "size":["100%-8px",
+              "100%c+2px"],
+            "controls":[{
+              "title": {
+                "type": "panel",
+                "size":["100%",
+                  30],
+                "bindings": [{
+                  "binding_name": "#hud_title_text_string",
+                  "binding_name_override": "#nperma",
+                  "binding_type": "global"
+                },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "((('%.120s' * (#nperma-'§s§s§h')) - ('%.20s' * (#nperma-'§s§s§h')))-'\t')",
+                    "target_property_name": "#titel"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not(#titel = ''))",
+                    "target_property_name":"#visible"
+                  }],
+                "controls":[{
+                  "isLabel": {
+                    "type": "label",
+                    "text_alignment": "center",
+                    "size":["100%",
+                      "100%"],
+                    "font_size": "large",
+                    "font_type": "MinecraftTen",
+                    "text":"#text",
+                    "shadow": true,
+                    "bindings": [{
+                      "binding_type": "view",
+                      "source_control_name": "title",
+                      "resolve_sibling_scope": true,
+                      "source_property_name": "(not (('%.8s' * #titel) = 'textures'))",
+                      "target_property_name":"#visible"
+                    },
+                      {
+                        "binding_type": "view",
+                        "source_control_name": "title",
+                        "resolve_sibling_scope": true,
+                        "source_property_name": "('§z'+#titel)",
+                        "target_property_name": "#text"
+                      }]
+                  }
+                },
+                  {
+                    "isTexture": {
+                      "type": "image",
+                      "size":["100%",
+                        "100%"],
+                      "offset":[0,
+                        4],
+                      "bindings": [{
+                        "binding_type": "view",
+                        "source_control_name": "title",
+                        "resolve_sibling_scope": true,
+                        "source_property_name": "(('%.8s' * #titel) = 'textures')",
+                        "target_property_name":"#visible"
+                      },
+                        {
+                          "binding_type": "view",
+                          "source_property_name": "#titel",
+                          "source_control_name": "title",
+                          "resolve_sibling_scope": true,
+                          "target_property_name": "#texture"
+                        }]
+                    }
+                  }]
+              }
+            },
+              {
+                "empty": {
+                  "type":"panel",
+                  "size":[0,
+                    2]
+                }
+              },
+              {
+                "body": {
+                  "type": "panel",
+                  "size":["100%",
+                    "100%c"],
+                  "bindings": [{
+                    "binding_name": "#hud_title_text_string",
+                    "binding_name_override": "#nperma",
+                    "binding_type": "global"
+                  },
+                    {
+                      "binding_type": "view",
+                      "source_property_name": "(( ((#nperma-'§s§s§h') - ( '%.120s' * (#nperma-'§s§s§h') ) )) -'\t')",
+                      "target_property_name": "#bodi"
+                    },
+                    {
+                      "binding_type": "view",
+                      "source_property_name": "(not(#bodi = ''))",
+                      "target_property_name":"#visible"
+                    }],
+                  "controls":[{
+                    "label": {
+                      "type": "label",
+                      "size":["100%",
+                        "default"],
+                      "shadow": true,
+                      "text": "#text",
+                      "font_scale_factor": 0.8,
+                      "line_padding": 2,
+                      "text_alignment": "left",
+                      "font_type": "default",
+                      "backup_font_type": "default",
+                      "bindings":[{
+                        "binding_type": "view",
+                        "resolve_sibling_scope": true,
+                        "source_control_name": "body",
+                        "source_property_name": "('§r'+#bodi)",
+                        "target_property_name":"#text"
+                      }]
+                    }
+                  }]
+                }
+              }]
+          }
+        }]
+      }
+    }],
+    "bindings": [{
+      "binding_name": "#hud_title_text_string",
+      "binding_name_override": "#nperma",
+      "binding_type": "global"
+    },
+      {
+        "binding_type": "view",
+        "source_property_name": "((not((#nperma-'§s§s§h') = #nperma)) and (not ((#nperma-'§s§s§h')='')))",
+        "target_property_name": "#visible"
+      }]
+  },
+
+  "hud_actionbar_text": {
+    "type": "image",
+    "size":["100%",
+      "100%"],
+    "texture": "textures/ui/Black",
+    "alpha": 0,
+    "controls":[{
+      "default_not_survival": {
+        "type": "custom",
+        "renderer": "hunger_renderer",
+        "anchor_from": "bottom_middle",
+        "anchor_to": "bottom_middle",
+        "offset":[0,
+          0],
+        "controls":[{
+          "actionbar": {
+            "type": "image",
+            "size": ["100%c + 12px",
+              "100%c + 5px"],
+            "offset": [0,
+              "50%-86px"],
+            "texture": "textures/ui/hud_tip_text_background",
+            "alpha": "@hud.anim_actionbar_text_background_alpha_out",
+            "controls": [{
+              "actionbar_message": {
+                "type": "label",
+                "anchor_from": "center",
+                "anchor_to": "center",
+                "color": "$tool_tip_text",
+                "enable_profanity_filter": true,
+                "layer": 31,
+                "text": "$actionbar_text",
+                "localize": false,
+                "alpha": "@hud.anim_actionbar_text_alpha_out"
+              }
+            }]
+          }
+        }],
+        "property_bag": {
+          "#act": "$actionbar_text"
+        },
+        "bindings":[{
+          "binding_type": "view",
+          "source_property_name": "((not #show_survival_ui) and (not(('%.7s' * #act) = 'dialog:')))",
+          "target_property_name": "#visible"
+        }]
+      }
+    },
+      {
+        "default_survival": {
+          "type": "custom",
+          "renderer": "hunger_renderer",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "bottom_middle",
+          "offset":[0,
+            -8],
+          "controls":[{
+            "actionbar": {
+              "type": "image",
+              "size": ["100%c + 12px",
+                "100%c + 5px"],
+              "offset": [0,
+                "50%-80px"],
+              "texture": "textures/ui/hud_tip_text_background",
+              "alpha": "@hud.anim_actionbar_text_background_alpha_out",
+              "controls": [{
+                "actionbar_message": {
+                  "type": "label",
+                  "anchor_from": "center",
+                  "anchor_to": "center",
+                  "color": "$tool_tip_text",
+                  "enable_profanity_filter": true,
+                  "layer": 31,
+                  "text": "$actionbar_text",
+                  "localize": false,
+                  "alpha": "@hud.anim_actionbar_text_alpha_out"
+                }
+              }]
+            }
+          }],
+          "property_bag": {
+            "#act": "$actionbar_text"
+          },
+          "bindings":[{
+            "binding_type": "view",
+            "source_property_name": "(#show_survival_ui and (not(('%.7s' * #act) = 'dialog:')))",
+            "target_property_name": "#visible"
+          }]
+        }
+      },
+      {
+        "dialogue": {
+          "type": "panel",
+          "size":[280,
+            64],
+          "property_bag": {
+            "#actt": "$actionbar_text"
+          },
+          "controls":[{
+            "background": {
+              "type": "image",
+              "size":["100%",
+                "100%"],
+              "layer": 1,
+              "bindings":[{
+                "binding_type": "view",
+                "source_control_name": "dialogue",
+                "resolve_sibling_scope": true,
+                "source_property_name": "#background",
+                "target_property_name": "#texture"
+              }]
+            }
+          },
+            {
+              "dialogue_stack": {
+                "type": "stack_panel",
+                "orientation": "horizontal",
+                "size":["100%-10px",
+                  "100%-10px"],
+                "controls":[{
+                  "avatar": {
+                    "type": "image",
+                    "size":[50,
+                      "100%"],
+                    "layer": 2,
+                    "bindings":[ {
+                      "binding_type": "view",
+                      "source_control_name": "dialogue_stack",
+                      "resolve_sibling_scope": true,
+                      "source_property_name": "(not (#icon=''))",
+                      "target_property_name": "#visible"
+                    },
+                      {
+                        "binding_type": "view",
+                        "source_control_name": "dialogue_stack",
+                        "resolve_sibling_scope": true,
+                        "source_property_name": "#icon",
+                        "target_property_name": "#texture"
+                      }]
+                  }
+                },
+                  {
+                    "stack_text": {
+                      "type": "stack_panel",
+                      "size":["fill",
+                        "100%"],
+                      "controls":[{
+                        "label1": {
+                          "type": "stack_panel",
+                          "size": ["100%",
+                            "100%c"],
+                          "orientation": "horizontal",
+                          "controls":[{
+                            "dot": {
+                              "type": "panel",
+                              "size": [7,
+                                1],
+                              "layer": 32,
+                              "controls":[{
+                                "dott": {
+                                  "type": "image",
+                                  "size":[3,
+                                    3],
+                                  "offset":[0,
+                                    2.5],
+                                  "anchor_from": "left_middle",
+                                  "anchor_to": "left_middle",
+                                  "layer": 33,
+                                  "texture": "textures/ui/control_white"
+                                }
+                              }]
+                            }
+                          },
+                            {
+                              "label": {
+                                "type": "label",
+                                "text":"#text",
+                                "text_alignment": "left",
+                                "size":["fill",
+                                  "default"],
+                                "layer": 32,
+                                "font_scale_factor": 0.95,
+                                "bindings":[{
+                                  "binding_type": "view",
+                                  "source_control_name": "label1",
+                                  "source_property_name": "#text1",
+                                  "target_property_name": "#text",
+                                  "resolve_sibling_scope": true
+                                }]
+                              }
+                            }],
+                          "bindings":[{
+                            "binding_type": "view",
+                            "source_control_name": "stack_text",
+                            "source_property_name": "('§r'+#text_1)",
+                            "target_property_name": "#text1",
+                            "resolve_sibling_scope": true
+                          },
+                            {
+                              "binding_type": "view",
+                              "source_property_name": "(not((#text1-'§r') = ''))",
+                              "target_property_name": "#visible"
+                            }]
+                        }
+                      },
+                        {
+                          "label2": {
+                            "type": "stack_panel",
+                            "size": ["100%",
+                              "100%c"],
+                            "offset":[0,
+                              -4],
+                            "orientation": "horizontal",
+                            "controls":[{
+                              "dot": {
+                                "type": "panel",
+                                "size": [7,
+                                  1],
+                                "layer": 32,
+                                "controls":[{
+                                  "dott": {
+                                    "type": "image",
+                                    "size":[3,
+                                      3],
+                                    "anchor_from": "left_middle",
+                                    "anchor_to": "left_middle",
+                                    "offset":[0,
+                                      2.5],
+                                    "layer": 33,
+                                    "texture": "textures/ui/control_white"
+                                  }
+                                }]
+                              }
+                            },
+                              {
+                                "label": {
+                                  "type": "label",
+                                  "text":"#text",
+                                  "text_alignment": "left",
+                                  "size":["fill",
+                                    "default"],
+                                  "layer": 32,
+                                  "font_scale_factor": 0.95,
+                                  "bindings":[{
+                                    "binding_type": "view",
+                                    "source_control_name": "label2",
+                                    "source_property_name": "#text2",
+                                    "target_property_name": "#text",
+                                    "resolve_sibling_scope": true
+                                  }]
+                                }
+                              }],
+                            "bindings":[{
+                              "binding_type": "view",
+                              "source_control_name": "stack_text",
+                              "source_property_name": "('§r'+#text_2)",
+                              "target_property_name": "#text2",
+                              "resolve_sibling_scope": true
+                            },
+                              {
+                                "binding_type": "view",
+                                "source_property_name": "(not((#text2-'§r') = ''))",
+                                "target_property_name": "#visible"
+                              }]
+                          }
+                        },
+                        {
+                          "label3": {
+                            "type": "stack_panel",
+                            "size": ["100%",
+                              "100%c"],
+                            "offset":[0,
+                              -4],
+                            "orientation": "horizontal",
+                            "controls":[{
+                              "dot": {
+                                "type": "panel",
+                                "size": [7,
+                                  1],
+                                "layer": 32,
+                                "controls":[{
+                                  "dott": {
+                                    "type": "image",
+                                    "size":[3,
+                                      3],
+                                    "offset":[0,
+                                      2.5],
+                                    "anchor_from": "left_middle",
+                                    "anchor_to": "left_middle",
+                                    "layer": 33,
+                                    "texture": "textures/ui/control_white"
+                                  }
+                                }]
+                              }
+                            },
+                              {
+                                "label": {
+                                  "type": "label",
+                                  "text":"#text",
+                                  "text_alignment": "left",
+                                  "size":["fill",
+                                    "default"],
+                                  "layer": 32,
+                                  "font_scale_factor": 0.95,
+                                  "bindings":[{
+                                    "binding_type": "view",
+                                    "source_control_name": "label3",
+                                    "source_property_name": "#text3",
+                                    "target_property_name": "#text",
+                                    "resolve_sibling_scope": true
+                                  }]
+                                }
+                              }],
+                            "bindings":[{
+                              "binding_type": "view",
+                              "source_control_name": "stack_text",
+                              "source_property_name": "('§r'+#text_3)",
+                              "target_property_name": "#text3",
+                              "resolve_sibling_scope": true
+                            },
+                              {
+                                "binding_type": "view",
+                                "source_property_name": "(not((#text3-'§r') = ''))",
+                                "target_property_name": "#visible"
+                              }]
+                          }
+                        }],
+                      "bindings":[{
+                        "binding_type": "view",
+                        "source_control_name": "dialogue_stack",
+                        "source_property_name": "#dialog1",
+                        "target_property_name": "#text_1",
+                        "resolve_sibling_scope": true
+                      },
+                        {
+                          "binding_type": "view",
+                          "source_control_name": "dialogue_stack",
+                          "source_property_name": "#dialog2",
+                          "target_property_name": "#text_2",
+                          "resolve_sibling_scope": true
+                        },
+                        {
+                          "binding_type": "view",
+                          "source_control_name": "dialogue_stack",
+                          "source_property_name": "#dialog3",
+                          "target_property_name": "#text_3",
+                          "resolve_sibling_scope": true
+                        }]
+                    }
+                  }],
+                "bindings":[{
+                  "binding_type": "view",
+                  "source_control_name": "dialogue",
+                  "resolve_sibling_scope": true,
+                  "source_property_name": "#avatar",
+                  "target_property_name": "#icon"
+                },
+                  {
+                    "binding_type": "view",
+                    "source_control_name": "dialogue",
+                    "resolve_sibling_scope": true,
+                    "source_property_name": "#text1",
+                    "target_property_name": "#dialog1"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_control_name": "dialogue",
+                    "resolve_sibling_scope": true,
+                    "source_property_name": "#text2",
+                    "target_property_name": "#dialog2"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_control_name": "dialogue",
+                    "resolve_sibling_scope": true,
+                    "source_property_name": "#text3",
+                    "target_property_name": "#dialog3"
+                  }]
+              }
+            }],
+          "bindings":[{
+            "binding_type": "view",
+            "source_property_name": "(('%.7s' * #actt) = 'dialog:')",
+            "target_property_name": "#visible"
+          },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#actt - ('%.7s' * #actt))",
+              "target_property_name": "#dialogue_data"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(('%.200s' * #dialogue_data) - '\t')",
+              "target_property_name": "#background"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "((('%.400s' * #dialogue_data) - ('%.200s' * #dialogue_data)) - '\t')",
+              "target_property_name": "#avatar"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "((('%.800s' * #dialogue_data) - ('%.400s' * #dialogue_data)) - '\t')",
+              "target_property_name": "#text1"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "((('%.1200s' * #dialogue_data) - ('%.800s' * #dialogue_data)) - '\t')",
+              "target_property_name": "#text2"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "((('%.1600s' * #dialogue_data) - ('%.1200s' * #dialogue_data)) - '\t')",
+              "target_property_name": "#text3"
+            }]
+        }
+      }]
+  },
+
+  "hud_screen": {
+    "$additional_screen_content": "hud.nperma_root"
+  }
+}

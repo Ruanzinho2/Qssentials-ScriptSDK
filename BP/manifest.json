@@ -1,0 +1,49 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Qssentials",
+    "description": "Qssentials, build using §bScriptStarterV2",
+    "uuid": "f640972d-7cc1-4b6c-a026-8b24f037ab7f",
+    "version": [1,
+      1,
+      0],
+    "min_engine_version": [1,
+      21,
+      100]
+  },
+  "modules": [{
+    "type": "data",
+    "description": "For Support Realm and Server",
+    "uuid": "dbd51746-0c75-4dee-9330-e73722b3b2ee",
+    "version": [1,
+      0,
+      0]
+  },
+    {
+      "description": "",
+      "uuid": "a179cee3-8f2d-474f-8bce-6ca5ef0a02ff",
+      "version": "1.1.0-beta",
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/_loader/core.js"
+    }],
+  "dependencies": [{
+    "uuid": "290199d9-b3c5-488a-9fb9-be28cd4e639d",
+    "version":[1,
+      1,
+      0]
+  },
+    {
+      "module_name": "@minecraft/server-admin",
+      "version": "1.0.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.5.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "2.1.0-beta"
+    }],
+  "capabilities": ["script_eval"]
+}
